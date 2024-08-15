@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coingecko.R
 import com.example.coingecko.app.App
 import com.example.coingecko.databinding.FragmentMainBinding
+import com.example.coingecko.utils.Constants
 import com.example.coingecko.utils.Factory
 import kotlinx.coroutines.launch
 
@@ -44,7 +45,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
-        viewModel.getCoinsList("usd")
+        viewModel.getCoinsList(Constants.CURRENCY_USD)
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
