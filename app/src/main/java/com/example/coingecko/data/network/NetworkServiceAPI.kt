@@ -9,12 +9,12 @@ interface NetworkServiceAPI {
 
 
     @GET("markets")
-    suspend fun getCoinsList(@Query("vs_currency") targetCurrency: String): List<CoinDto>
+    suspend fun getCoinsList(@Query("vs_currency") targetCurrency: String, @Query("per_page") perPage: Int): List<CoinDto>
 
     @GET("{id}/market_chart")
     suspend fun getCoin(
         @Path("id") id: String,
-    @Query("vs_currency") targetCurrency: String
+        @Query("vs_currency") targetCurrency: String
     ): CoinDto
 
 

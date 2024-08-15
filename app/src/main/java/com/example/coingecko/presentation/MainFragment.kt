@@ -1,5 +1,6 @@
 package com.example.coingecko.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,10 +43,19 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
         viewModel.getCoinsList(Constants.CURRENCY_USD)
+
+        binding.buttonUSD.setOnClickListener {
+            viewModel.getCoinsList(Constants.CURRENCY_USD)
+        }
+
+        binding.buttonRUB.setOnClickListener {
+            viewModel.getCoinsList(Constants.CURRENCY_RUB)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -71,12 +81,7 @@ class MainFragment : Fragment() {
         }
         binding.coinsRecycler.adapter = adapter
         binding.coinsRecycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.coinsRecycler.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.VERTICAL
-            )
-        )
+
     }
 
     override fun onDestroyView() {

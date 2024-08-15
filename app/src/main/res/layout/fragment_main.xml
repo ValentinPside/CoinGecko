@@ -20,10 +20,11 @@
         android:id="@+id/coinsRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/specific_toolbars"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUSD"
         tools:listitem="@layout/coin_item" />
 
     <ProgressBar
@@ -36,5 +37,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonUSD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="USD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/specific_toolbars"
+        style="@style/orange_style"/>
+
+    <Button
+        android:id="@+id/buttonRUB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="RUB"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonUSD"
+        app:layout_constraintStart_toEndOf="@+id/buttonUSD"
+        app:layout_constraintTop_toTopOf="@+id/buttonUSD"
+        style="@style/gray_style"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

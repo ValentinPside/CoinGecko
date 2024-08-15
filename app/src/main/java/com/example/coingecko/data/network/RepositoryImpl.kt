@@ -12,7 +12,7 @@ class RepositoryImpl @Inject constructor(private val api: NetworkServiceAPI): Re
 
     override suspend fun getCoinList(targetCurrency: String): List<Coin> {
         return withContext(Dispatchers.IO) {
-            val coinRemote = api.getCoinsList(targetCurrency)
+            val coinRemote = api.getCoinsList(targetCurrency, 25)
             coinRemote.asListCoin()
         }
     }

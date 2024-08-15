@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.example.coingecko.R
 import com.example.coingecko.databinding.CoinItemBinding
 import com.example.coingecko.domain.Coin
-import com.example.coingecko.utils.Constants
 import java.util.Locale
 
 class Adapter (private val onClick: (title: String, id: String) -> Unit) :
@@ -26,9 +25,11 @@ class Adapter (private val onClick: (title: String, id: String) -> Unit) :
         fun bind(coin: Coin) {
             binding.name.text = coin.name
             binding.symbol.text = coin.symbol.uppercase(Locale.ROOT)
-            binding.price.text = Constants.USD.plus(formatPrice(coin.price))
-            binding.changePercent.text = plusOrNot(String.format("%.2f", coin.changePercent).plus("%"))
-            if(binding.changePercent.text.contains('+')) binding.changePercent.setTextColor(R.color.green)
+            binding.price.text = formatPrice(coin.price)
+            val changePercentText = String.format("%.2f", coin.changePercent).plus("%")
+            val changePercentTextNew = plusOrNot(changePercentText)
+            binding.changePercent.text = changePercentTextNew
+            if(changePercentTextNew.contains('+')) binding.changePercent.setTextColor(R.color.green)
             Glide.with(binding.imageView)
                 .load(coin.image)
                 .placeholder(R.drawable.placeholder)
