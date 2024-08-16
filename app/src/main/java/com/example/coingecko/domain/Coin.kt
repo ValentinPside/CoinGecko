@@ -5,6 +5,7 @@ data class Coin (
     val symbol: String,
     val name: String,
     val image: String,
-    val price: Double,
-    val changePercent: Double
+    val price: String,
+    val changePercent: String,
+    val color: Int
 )

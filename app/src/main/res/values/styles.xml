@@ -9,4 +9,13 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:backgroundTint">@color/gray_button</item>
     </style>
+
+    <style name="button_rounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeBottomRight">32dp</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
+    </style>
+
 </resources>

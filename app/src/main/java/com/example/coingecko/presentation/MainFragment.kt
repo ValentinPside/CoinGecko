@@ -1,12 +1,12 @@
 package com.example.coingecko.presentation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -42,19 +42,24 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
-        viewModel.getCoinsList(Constants.CURRENCY_USD)
+        usdBtClick()
+
 
         binding.buttonUSD.setOnClickListener {
-            viewModel.getCoinsList(Constants.CURRENCY_USD)
+            usdBtClick()
         }
 
         binding.buttonRUB.setOnClickListener {
-            viewModel.getCoinsList(Constants.CURRENCY_RUB)
+            rubBtClick()
+        }
+
+        binding.retry.setOnClickListener {
+            viewModel.getCoinsList(CurrentCurrency.currentCurrencySearch)
+            binding.coinsRecycler.visibility = View.VISIBLE
+            binding.errorGroup.visibility = View.GONE
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -65,7 +70,10 @@ class MainFragment : Fragment() {
                         false -> binding.progressBar.visibility = View.GONE
                     }
                     adapter.submitList(state.coinsList)
-                    state.error?.let { Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show() }
+                    state.error?.let {
+                        binding.coinsRecycler.visibility = View.GONE
+                        binding.errorGroup.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -76,12 +84,32 @@ class MainFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_mainFragment_to_detailsFragment,
                 bundleOf("title" to title, "id" to id)
-
             )
         }
         binding.coinsRecycler.adapter = adapter
         binding.coinsRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.coinsRecycler.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
 
+    }
+
+    private fun usdBtClick(){
+        viewModel.getCoinsList(Constants.CURRENCY_USD)
+        binding.buttonUSD.setTextAppearance(R.style.orange_style)
+        binding.buttonRUB.setTextAppearance(R.style.gray_style)
+        binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.orange_button))
+        binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.gray_button))
+        CurrentCurrency.currentCurrency = Constants.USD
+        CurrentCurrency.currentCurrencySearch = Constants.CURRENCY_USD
+    }
+
+    private fun rubBtClick(){
+        viewModel.getCoinsList(Constants.CURRENCY_RUB)
+        binding.buttonRUB.setTextAppearance(R.style.orange_style)
+        binding.buttonUSD.setTextAppearance(R.style.gray_style)
+        binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.orange_button))
+        binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.gray_button))
+        CurrentCurrency.currentCurrency = Constants.RUB
+        CurrentCurrency.currentCurrencySearch = Constants.CURRENCY_RUB
     }
 
     override fun onDestroyView() {

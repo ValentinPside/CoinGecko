@@ -1,7 +1,7 @@
 package com.example.coingecko.presentation
 
 import android.annotation.SuppressLint
-import android.icu.text.DecimalFormat
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,31 +12,38 @@ import com.bumptech.glide.Glide
 import com.example.coingecko.R
 import com.example.coingecko.databinding.CoinItemBinding
 import com.example.coingecko.domain.Coin
-import java.util.Locale
 
-class Adapter (private val onClick: (title: String, id: String) -> Unit) :
+class Adapter(private val onClick: (title: String, id: String) -> Unit) :
     ListAdapter<Coin, Adapter.ViewHolder>(DiffUtilItem()) {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CoinItemBinding.bind(view)
 
-
         @SuppressLint("ResourceAsColor")
         fun bind(coin: Coin) {
             binding.name.text = coin.name
-            binding.symbol.text = coin.symbol.uppercase(Locale.ROOT)
-            binding.price.text = formatPrice(coin.price)
-            val changePercentText = String.format("%.2f", coin.changePercent).plus("%")
-            val changePercentTextNew = plusOrNot(changePercentText)
-            binding.changePercent.text = changePercentTextNew
-            if(changePercentTextNew.contains('+')) binding.changePercent.setTextColor(R.color.green)
+            binding.symbol.text = coin.symbol
+            binding.price.text = CurrentCurrency.currentCurrency.plus(coin.price)
+            binding.changePercent.text = coin.changePercent
+            try {
+                val b: Int = coin.color
+                if (b == R.color.red) {
+                    binding.changePercent.setTextColor(Color.RED)
+                }
+                if (b == R.color.green) {
+                    binding.changePercent.setTextColor(R.color.green)
+                }
+            } catch (nfe: NumberFormatException) {
+                println("Could not parse $nfe")
+            }
+
             Glide.with(binding.imageView)
                 .load(coin.image)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .circleCrop()
                 .into(binding.imageView)
-            binding.root.setOnClickListener{
+            binding.root.setOnClickListener {
                 onClick.invoke(coin.name, coin.id)
             }
         }
@@ -52,22 +59,7 @@ class Adapter (private val onClick: (title: String, id: String) -> Unit) :
         holder.bind(item)
     }
 
-    private fun formatPrice(price: Double): String {
-        val df = DecimalFormat("#,###.##")
-        df.isGroupingUsed = true
-        df.groupingSize = 3
-        return df.format(price).replace(" ", ",")
-    }
-
-    private fun plusOrNot(change: String): String{
-        return if(change[0] == '-'){
-            change
-        } else{
-            "+".plus(change)
-        }
-    }
-
-    private class DiffUtilItem: DiffUtil.ItemCallback<Coin>() {
+    private class DiffUtilItem : DiffUtil.ItemCallback<Coin>() {
 
         override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean {
             return oldItem.id == newItem.id

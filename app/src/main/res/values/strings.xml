@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">CoinGecko</string>
     <string name="error_message">что-то пошло не так</string>
+    <string name="error_text">Произошла какая-то ошибка :( \n Попробуем снова?</string>
+    <string name="usd">USD</string>
+    <string name="rub">RUB</string>
+    <string name="retry">ПОПРОБОВАТЬ</string>
 </resources>
