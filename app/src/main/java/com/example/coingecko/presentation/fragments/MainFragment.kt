@@ -60,6 +60,10 @@ class MainFragment : Fragment() {
             startSearch()
         }
 
+        binding.coinsSwiper.setOnRefreshListener {
+            startSearch()
+        }
+
         binding.retry.setOnClickListener {
             viewModel.getCoinsList(CurrentCurrency.currentCurrencySearch)
             binding.coinsRecycler.visibility = View.VISIBLE
@@ -69,9 +73,12 @@ class MainFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.observeUi().collect { state ->
-                    when(state.isLoading){
+                    when(state.isLoading && !binding.coinsSwiper.isRefreshing){
                         true -> binding.progressBar.visibility = View.VISIBLE
                         false -> binding.progressBar.visibility = View.GONE
+                    }
+                    if(binding.coinsSwiper.isRefreshing){
+                        binding.coinsSwiper.isRefreshing = false
                     }
                     adapter.submitList(state.coinsList)
                     state.error?.let {
@@ -93,6 +100,7 @@ class MainFragment : Fragment() {
         binding.coinsRecycler.adapter = adapter
         binding.coinsRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.coinsRecycler.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
+        binding.coinsSwiper.setColorSchemeResources(R.color.orange)
 
     }
 
@@ -120,7 +128,6 @@ class MainFragment : Fragment() {
         binding.buttonRUB.setTextAppearance(CurrentCurrency.rubTextColor)
         binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),CurrentCurrency.usdButtonColor))
         binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),CurrentCurrency.rubButtonColor))
-
     }
 
     override fun onDestroyView() {

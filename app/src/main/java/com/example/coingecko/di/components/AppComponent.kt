@@ -1,6 +1,8 @@
-package com.example.coingecko.di
+package com.example.coingecko.di.components
 
 import android.content.Context
+import com.example.coingecko.di.modules.NetworkModule
+import com.example.coingecko.di.modules.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

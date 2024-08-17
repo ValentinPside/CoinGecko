@@ -1,4 +1,4 @@
-package com.example.coingecko.di
+package com.example.coingecko.di.modules
 
 import com.example.coingecko.BuildConfig
 import com.example.coingecko.data.network.NetworkServiceAPI

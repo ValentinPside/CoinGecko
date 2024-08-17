@@ -16,16 +16,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="Список криптовалют" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/coinsRecycler"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/coinsSwiper"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUSD"
-        tools:listitem="@layout/coin_item" />
+        android:foregroundTint="@color/orange"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRUB">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/coinsRecycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            tools:listitem="@layout/coin_item" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -71,6 +71,7 @@ dependencies {
 
     // ui
     implementation(libs.glide)
+    implementation(libs.swiperefresh)
 
     //lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)

@@ -1,7 +1,6 @@
 package com.example.coingecko.utils
 
 import com.example.coingecko.R
-import com.example.coingecko.utils.Constants
 
 object CurrentCurrency {
     var currentCurrency = Constants.USD
