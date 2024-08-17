@@ -1,4 +1,4 @@
-package com.example.coingecko.presentation
+package com.example.coingecko.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coingecko.R
 import com.example.coingecko.app.App
 import com.example.coingecko.databinding.FragmentMainBinding
+import com.example.coingecko.presentation.Adapter
+import com.example.coingecko.utils.CurrentCurrency
+import com.example.coingecko.presentation.view_models.MainViewModel
 import com.example.coingecko.utils.Constants
 import com.example.coingecko.utils.Factory
 import kotlinx.coroutines.launch
@@ -44,15 +47,17 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
-        usdBtClick()
+        startSearch()
 
 
         binding.buttonUSD.setOnClickListener {
             usdBtClick()
+            startSearch()
         }
 
         binding.buttonRUB.setOnClickListener {
             rubBtClick()
+            startSearch()
         }
 
         binding.retry.setOnClickListener {
@@ -92,23 +97,30 @@ class MainFragment : Fragment() {
     }
 
     private fun usdBtClick(){
-        viewModel.getCoinsList(Constants.CURRENCY_USD)
-        binding.buttonUSD.setTextAppearance(R.style.orange_style)
-        binding.buttonRUB.setTextAppearance(R.style.gray_style)
-        binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.orange_button))
-        binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.gray_button))
         CurrentCurrency.currentCurrency = Constants.USD
         CurrentCurrency.currentCurrencySearch = Constants.CURRENCY_USD
+        CurrentCurrency.usdTextColor = R.style.orange_style
+        CurrentCurrency.usdButtonColor = R.color.orange_button
+        CurrentCurrency.rubTextColor = R.style.gray_style
+        CurrentCurrency.rubButtonColor = R.color.gray_button
     }
 
     private fun rubBtClick(){
-        viewModel.getCoinsList(Constants.CURRENCY_RUB)
-        binding.buttonRUB.setTextAppearance(R.style.orange_style)
-        binding.buttonUSD.setTextAppearance(R.style.gray_style)
-        binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.orange_button))
-        binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.gray_button))
         CurrentCurrency.currentCurrency = Constants.RUB
         CurrentCurrency.currentCurrencySearch = Constants.CURRENCY_RUB
+        CurrentCurrency.rubTextColor = R.style.orange_style
+        CurrentCurrency.rubButtonColor = R.color.orange_button
+        CurrentCurrency.usdTextColor = R.style.gray_style
+        CurrentCurrency.usdButtonColor = R.color.gray_button
+    }
+
+    private fun startSearch(){
+        viewModel.getCoinsList(CurrentCurrency.currentCurrencySearch)
+        binding.buttonUSD.setTextAppearance(CurrentCurrency.usdTextColor)
+        binding.buttonRUB.setTextAppearance(CurrentCurrency.rubTextColor)
+        binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),CurrentCurrency.usdButtonColor))
+        binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),CurrentCurrency.rubButtonColor))
+
     }
 
     override fun onDestroyView() {

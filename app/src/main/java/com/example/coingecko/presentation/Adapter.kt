@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.coingecko.R
 import com.example.coingecko.databinding.CoinItemBinding
 import com.example.coingecko.domain.Coin
+import com.example.coingecko.utils.CurrentCurrency
 
 class Adapter(private val onClick: (title: String, id: String) -> Unit) :
     ListAdapter<Coin, Adapter.ViewHolder>(DiffUtilItem()) {

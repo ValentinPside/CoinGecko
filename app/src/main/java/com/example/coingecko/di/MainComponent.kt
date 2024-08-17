@@ -1,6 +1,6 @@
 package com.example.coingecko.di
 
-import com.example.coingecko.presentation.MainViewModel
+import com.example.coingecko.presentation.view_models.MainViewModel
 import dagger.Subcomponent
 
 @Subcomponent

@@ -1,4 +1,4 @@
-package com.example.coingecko.presentation
+package com.example.coingecko.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.coingecko.R
 import com.example.coingecko.app.App
 import com.example.coingecko.databinding.FragmentDetailsBinding
+import com.example.coingecko.presentation.view_models.DetailsViewModel
 import com.example.coingecko.utils.Factory
 import kotlinx.coroutines.launch
 
