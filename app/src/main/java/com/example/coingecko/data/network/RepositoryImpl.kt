@@ -1,5 +1,6 @@
 package com.example.coingecko.data.network
 
+import com.example.coingecko.data.network.dto.InfoCoinDto
 import com.example.coingecko.domain.Coin
 import com.example.coingecko.domain.Repository
 import com.example.coingecko.utils.asCoin
@@ -17,10 +18,10 @@ class RepositoryImpl @Inject constructor(private val api: NetworkServiceAPI): Re
         }
     }
 
-    override suspend fun getCoin(id: String, targetCurrency: String): Coin {
+    override suspend fun getCoin(id: String): InfoCoinDto {
         return withContext(Dispatchers.IO) {
-            val coinRemote = api.getCoin(id, targetCurrency)
-            coinRemote.asCoin()
+            val coinRemote = api.getCoin(id)
+            coinRemote
         }
     }
 

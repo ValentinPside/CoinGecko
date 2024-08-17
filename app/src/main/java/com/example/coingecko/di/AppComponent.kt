@@ -16,7 +16,7 @@ interface AppComponent {
 
     fun mainComponent(): MainComponent
 
-    fun detailsComponent(): DetailsComponent
+    fun detailsComponent(): DetailsComponent.DetailsComponentFactory
 
     @Component.Factory
     interface AppComponentFactory {

@@ -41,7 +41,6 @@ class Adapter(private val onClick: (title: String, id: String) -> Unit) :
                 .load(coin.image)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .circleCrop()
                 .into(binding.imageView)
             binding.root.setOnClickListener {
                 onClick.invoke(coin.name, coin.id)

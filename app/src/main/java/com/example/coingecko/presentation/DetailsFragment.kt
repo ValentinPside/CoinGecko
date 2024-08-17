@@ -10,6 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.example.coingecko.R
 import com.example.coingecko.app.App
 import com.example.coingecko.databinding.FragmentDetailsBinding
 import com.example.coingecko.utils.Factory
@@ -19,9 +22,11 @@ class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
+    private val title by lazy { requireArguments().getString("title") }
+    private val id by lazy { requireArguments().getString("id") }
     private val viewModel by viewModels<DetailsViewModel> {
         Factory {
-            App.appComponent.detailsComponent().viewModel()
+            App.appComponent.detailsComponent().create(requireNotNull(id)).viewModel()
         }
     }
 
@@ -36,15 +41,14 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getCoin("bitcoin", "usd")
+        setToolBar()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.observeUi().collect { state ->
-                    state.coin?.let {
-
-                    }
+                    binding.info.text = state.info
+                    binding.category.text = state.category
+                    state.imageUrl?.let { setImage(it) }
                     state.error?.let {
                         Toast.makeText(
                             requireContext(),
@@ -54,6 +58,21 @@ class DetailsFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setImage(imgUrl: String) {
+        Glide.with(this)
+            .load(imgUrl)
+            .placeholder(R.drawable.placeholder)
+            .error(R.drawable.placeholder)
+            .into(binding.imageView)
+    }
+
+    private fun setToolBar(){
+        binding.specificToolbars.title = title
+        binding.specificToolbars.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
