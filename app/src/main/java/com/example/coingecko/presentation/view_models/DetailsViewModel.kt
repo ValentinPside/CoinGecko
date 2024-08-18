@@ -28,9 +28,9 @@ class DetailsViewModel @Inject constructor(
                 val coinInfo = repository.getCoin(id)
                 state.update {
                     it.copy(
-                        info = coinInfo.description.en,
-                        category = coinInfo.categories.toString(),
-                        imageUrl = coinInfo.image.large,
+                        info = coinInfo.description,
+                        category = coinInfo.categories,
+                        imageUrl = coinInfo.image,
                         error = null
                     )
                 }

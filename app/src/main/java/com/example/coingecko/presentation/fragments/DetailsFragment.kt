@@ -17,6 +17,8 @@ import com.example.coingecko.app.App
 import com.example.coingecko.databinding.FragmentDetailsBinding
 import com.example.coingecko.presentation.view_models.DetailsViewModel
 import com.example.coingecko.utils.Factory
+import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import kotlinx.coroutines.launch
 
 class DetailsFragment : Fragment() {
@@ -44,11 +46,15 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setToolBar()
 
+        val markwon = Markwon.builder(requireContext())
+            .usePlugin(HtmlPlugin.create())
+            .build()
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.observeUi().collect { state ->
-                    binding.info.text = state.info
-                    binding.category.text = state.category
+                    state.info?.let { markwon.setMarkdown(binding.info, it) }
+                    state.category?.let { markwon.setMarkdown(binding.category, it) }
                     state.imageUrl?.let { setImage(it) }
                     state.error?.let {
                         Toast.makeText(

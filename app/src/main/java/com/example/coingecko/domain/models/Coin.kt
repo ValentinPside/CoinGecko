@@ -1,4 +1,4 @@
-package com.example.coingecko.domain
+package com.example.coingecko.domain.models
 
 data class Coin (
     val id: String,

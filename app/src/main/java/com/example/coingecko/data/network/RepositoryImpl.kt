@@ -1,9 +1,9 @@
 package com.example.coingecko.data.network
 
-import com.example.coingecko.data.network.dto.InfoCoinDto
-import com.example.coingecko.domain.Coin
+import com.example.coingecko.domain.models.Coin
 import com.example.coingecko.domain.Repository
-import com.example.coingecko.utils.asCoin
+import com.example.coingecko.domain.models.InfoCoin
+import com.example.coingecko.utils.asInfoCoin
 import com.example.coingecko.utils.asListCoin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,10 +18,10 @@ class RepositoryImpl @Inject constructor(private val api: NetworkServiceAPI): Re
         }
     }
 
-    override suspend fun getCoin(id: String): InfoCoinDto {
+    override suspend fun getCoin(id: String): InfoCoin {
         return withContext(Dispatchers.IO) {
             val coinRemote = api.getCoin(id)
-            coinRemote
+            coinRemote.asInfoCoin()
         }
     }
 

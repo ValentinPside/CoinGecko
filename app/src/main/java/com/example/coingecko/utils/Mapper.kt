@@ -3,7 +3,9 @@ package com.example.coingecko.utils
 import android.icu.text.DecimalFormat
 import com.example.coingecko.R
 import com.example.coingecko.data.network.dto.CoinDto
-import com.example.coingecko.domain.Coin
+import com.example.coingecko.data.network.dto.InfoCoinDto
+import com.example.coingecko.domain.models.Coin
+import com.example.coingecko.domain.models.InfoCoin
 import java.math.RoundingMode
 import java.util.Locale
 
@@ -16,6 +18,20 @@ fun CoinDto.asCoin() = Coin(
     changePercent = plusOrNot(String.format("%.2f", this.changePercent).plus("%")),
     color = color(this.changePercent)
 )
+
+fun InfoCoinDto.asInfoCoin() = InfoCoin(
+    categories = this.categories.joinToString(),
+    description = this.description.en,
+    image = this.image.large
+)
+
+fun listToString(list: List<String>): String{
+    val str = ""
+    list.forEach {
+        str.plus(it)
+    }
+    return str
+}
 
 fun List<CoinDto>.asListCoin() = this.map { it.asCoin() }
 

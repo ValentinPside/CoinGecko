@@ -3,7 +3,7 @@ package com.example.coingecko.presentation.view_models
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coingecko.R
-import com.example.coingecko.domain.Coin
+import com.example.coingecko.domain.models.Coin
 import com.example.coingecko.domain.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
