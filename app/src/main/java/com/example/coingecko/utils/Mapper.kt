@@ -25,7 +25,7 @@ fun InfoCoinDto.asInfoCoin() = InfoCoin(
     image = this.image.large
 )
 
-fun listToString(list: List<String>): String{
+fun listToString(list: List<String>): String {
     val str = ""
     list.forEach {
         str.plus(it)
@@ -43,15 +43,15 @@ private fun formatPrice(price: Double): String {
     return df.format(roundoff).replace(" ", ",")
 }
 
-private fun plusOrNot(changePercent: String): String{
-    return if(changePercent[0] == '-'){
+private fun plusOrNot(changePercent: String): String {
+    return if (changePercent[0] == '-') {
         changePercent
-    } else{
+    } else {
         "+".plus(changePercent)
     }
 }
 
-private fun color(changePercent: Double): Int{
+private fun color(changePercent: Double): Int {
     return if (changePercent < 0) {
         R.color.red
     } else {

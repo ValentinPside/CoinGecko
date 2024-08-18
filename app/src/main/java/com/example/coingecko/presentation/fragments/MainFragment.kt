@@ -44,6 +44,7 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
@@ -73,11 +74,11 @@ class MainFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.observeUi().collect { state ->
-                    when(state.isLoading && !binding.coinsSwiper.isRefreshing){
+                    when (state.isLoading && !binding.coinsSwiper.isRefreshing) {
                         true -> binding.progressBar.visibility = View.VISIBLE
                         false -> binding.progressBar.visibility = View.GONE
                     }
-                    if(binding.coinsSwiper.isRefreshing){
+                    if (binding.coinsSwiper.isRefreshing) {
                         binding.coinsSwiper.isRefreshing = false
                     }
                     adapter.submitList(state.coinsList)
@@ -99,12 +100,17 @@ class MainFragment : Fragment() {
         }
         binding.coinsRecycler.adapter = adapter
         binding.coinsRecycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.coinsRecycler.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
+        binding.coinsRecycler.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
+        )
         binding.coinsSwiper.setColorSchemeResources(R.color.orange)
 
     }
 
-    private fun usdBtClick(){
+    private fun usdBtClick() {
         CurrentCurrency.currentCurrency = Constants.USD
         CurrentCurrency.currentCurrencySearch = Constants.CURRENCY_USD
         CurrentCurrency.usdTextColor = R.style.orange_style
@@ -113,7 +119,7 @@ class MainFragment : Fragment() {
         CurrentCurrency.rubButtonColor = R.color.gray_button
     }
 
-    private fun rubBtClick(){
+    private fun rubBtClick() {
         CurrentCurrency.currentCurrency = Constants.RUB
         CurrentCurrency.currentCurrencySearch = Constants.CURRENCY_RUB
         CurrentCurrency.rubTextColor = R.style.orange_style
@@ -122,12 +128,22 @@ class MainFragment : Fragment() {
         CurrentCurrency.usdButtonColor = R.color.gray_button
     }
 
-    private fun startSearch(){
+    private fun startSearch() {
         viewModel.getCoinsList(CurrentCurrency.currentCurrencySearch)
         binding.buttonUSD.setTextAppearance(CurrentCurrency.usdTextColor)
         binding.buttonRUB.setTextAppearance(CurrentCurrency.rubTextColor)
-        binding.buttonUSD.setBackgroundColor(ContextCompat.getColor(requireContext(),CurrentCurrency.usdButtonColor))
-        binding.buttonRUB.setBackgroundColor(ContextCompat.getColor(requireContext(),CurrentCurrency.rubButtonColor))
+        binding.buttonUSD.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                CurrentCurrency.usdButtonColor
+            )
+        )
+        binding.buttonRUB.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                CurrentCurrency.rubButtonColor
+            )
+        )
     }
 
     override fun onDestroyView() {

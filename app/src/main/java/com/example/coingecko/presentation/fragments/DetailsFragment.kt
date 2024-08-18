@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +45,12 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setToolBar()
 
+        binding.retry.setOnClickListener {
+            id?.let { it1 -> viewModel.getCoinInfo(it1) }
+            binding.errorGroup.visibility = View.GONE
+            binding.infoGroup.visibility = View.VISIBLE
+        }
+
         val markwon = Markwon.builder(requireContext())
             .usePlugin(HtmlPlugin.create())
             .build()
@@ -53,15 +58,16 @@ class DetailsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.observeUi().collect { state ->
+                    when (state.isLoading) {
+                        true -> binding.progressBar.visibility = View.VISIBLE
+                        false -> binding.progressBar.visibility = View.GONE
+                    }
                     state.info?.let { markwon.setMarkdown(binding.info, it) }
                     state.category?.let { markwon.setMarkdown(binding.category, it) }
                     state.imageUrl?.let { setImage(it) }
                     state.error?.let {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(it),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        binding.errorGroup.visibility = View.VISIBLE
+                        binding.infoGroup.visibility = View.GONE
                     }
                 }
             }
@@ -76,7 +82,7 @@ class DetailsFragment : Fragment() {
             .into(binding.imageView)
     }
 
-    private fun setToolBar(){
+    private fun setToolBar() {
         binding.specificToolbars.title = title
         binding.specificToolbars.setNavigationOnClickListener {
             findNavController().popBackStack()

@@ -1,6 +1,6 @@
 package com.example.coingecko.domain.models
 
-data class Coin (
+data class Coin(
     val id: String,
     val symbol: String,
     val name: String,

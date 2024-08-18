@@ -22,8 +22,9 @@ class DetailsViewModel @Inject constructor(
         getCoinInfo(id)
     }
 
-    private fun getCoinInfo(id: String) {
+    fun getCoinInfo(id: String) {
         viewModelScope.launch {
+            state.update { it.copy(isLoading = true) }
             try {
                 val coinInfo = repository.getCoin(id)
                 state.update {
@@ -36,6 +37,8 @@ class DetailsViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 state.update { it.copy(error = R.string.error_message) }
+            } finally {
+                state.update { it.copy(isLoading = false) }
             }
         }
     }
@@ -45,5 +48,6 @@ data class DetailsState(
     val info: String? = null,
     val category: String? = null,
     val imageUrl: String? = null,
-    val error: Int? = null
+    val error: Int? = null,
+    val isLoading: Boolean = false
 )

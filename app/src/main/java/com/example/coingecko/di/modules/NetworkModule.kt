@@ -33,6 +33,7 @@ object NetworkModule {
         .build()
 
     @Provides
-    fun provideApi(retrofit: Retrofit): NetworkServiceAPI = retrofit.create(NetworkServiceAPI::class.java)
+    fun provideApi(retrofit: Retrofit): NetworkServiceAPI =
+        retrofit.create(NetworkServiceAPI::class.java)
 
 }
