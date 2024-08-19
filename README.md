@@ -1,4 +1,5 @@
 # CoinGecko
+## Цель
 Создать список криптовалют и отдельный экран с чуть более подробной информацией о каждой монете.
 
 ## Задачи
@@ -27,4 +28,7 @@ API метод для получения списка: /coins/markets. Мето�
 
 ### Вспомогательные ссылки
 1. [https://developer.android.com/kotlin/coroutines](https://docs.coingecko.com/v3.0.1/reference/endpoint-overview)
-1. [http://developer.android.com/reference/android/os/AsyncTask.html](https://www.figma.com/design/jq1CJfQRYSjIGiGZmabeaV/MobileUp-Trainee-Test-Task?node-id=0-1&t=NnyQGX3USXX5lXaP-0)
+2. [http://developer.android.com/reference/android/os/AsyncTask.html](https://www.figma.com/design/jq1CJfQRYSjIGiGZmabeaV/MobileUp-Trainee-Test-Task?node-id=0-1&t=NnyQGX3USXX5lXaP-0)
+
+### Стек для реализации
+MVVM, Kotlin, Single Activity, Navigation Component, View, Retrofit2, OkHttp3, Dagger, Kotlinx Serialization, Gson, Glide, Coroutines, Markwon, SwipeRefreshLayout
