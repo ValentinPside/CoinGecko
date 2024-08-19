@@ -7,4 +7,8 @@
     <string name="retry">ПОПРОБОВАТЬ</string>
     <string name="description">Описание</string>
     <string name="category">Категории</string>
+    <string name="symbol_holder">Symbol holder</string>
+    <string name="name_holder">Name holder</string>
+    <string name="price_holder">Price holder</string>
+    <string name="changepercent_holder">ChangePercent holder</string>
 </resources>
