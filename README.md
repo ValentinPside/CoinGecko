@@ -25,6 +25,6 @@ API метод для получения списка: /coins/markets. Мето�
 ### Задача 3(дополнительно). Pull to Refresh (Экран в Figma 1.1.3, 1.1.4)
 Добавить Pull to Refresh в экран списка криптовалют
 
-# Вспомогательные ссылки
+### Вспомогательные ссылки
 1. [https://developer.android.com/kotlin/coroutines](https://docs.coingecko.com/v3.0.1/reference/endpoint-overview)
 1. [http://developer.android.com/reference/android/os/AsyncTask.html](https://www.figma.com/design/jq1CJfQRYSjIGiGZmabeaV/MobileUp-Trainee-Test-Task?node-id=0-1&t=NnyQGX3USXX5lXaP-0)
